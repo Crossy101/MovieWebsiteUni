@@ -11,7 +11,7 @@ require('models/user.php');
 require('models/share.php');
 
 require('controllers/home.php');
-require('controllers/users.php');
+require('controllers/user.php');
 require('controllers/share.php');
 
 $bootstrap = new Bootstrap($_GET);

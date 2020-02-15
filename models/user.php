@@ -4,4 +4,14 @@ class UserModel extends Model {
     {
         return;
     }
+
+    public function Login()
+    {
+        return;
+    }
+
+    public function Register()
+    {
+        return;
+    }
 }
