@@ -5,7 +5,9 @@ abstract class Model {
 
     public function __construct()
     {
-        $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
+            $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
+
+
     }
 
     public function CreateQuery($query)
@@ -35,9 +37,18 @@ abstract class Model {
         $this->statement->bindValue($param, $value, $type);
     }
 
-    public function Execute()
+    public function execute()
     {
-        $this->statement->Execute();
+        if($this->statement->execute())
+        {
+            echo "Success!";
+        }
+        else
+        {
+            echo "Failed!";
+        }
+
+
     }
 
     public function ResultSet()
@@ -45,4 +56,10 @@ abstract class Model {
         $this->Execute();
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function lastInsertID()
+    {
+        return $this->dbh->lastInsertId();
+    }
+
 }
