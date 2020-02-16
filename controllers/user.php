@@ -15,13 +15,7 @@ class user extends Controller{
 
     protected function logout()
     {
-        unset($_SESSION['is_logged_in']);
-        unset($_SESSION['user_data']);
-        session_destroy();
-        header('Location: '.ROOT_URL);
+        $viewModel = new UserModel();
+        $this->ReturnView($viewModel->logout(), false);
     }
-
-
-
-
 }
