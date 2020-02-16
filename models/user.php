@@ -9,10 +9,9 @@ class UserModel extends Model {
         {
             $this->CreateQuery('SELECT * FROM users WHERE username = :username');
             $this->bind(':username', $post['username']);
-            $this->execute();
+            $this->Execute();
 
             $row = $this->ResultSingle();
-            print_r($row);
             if($row)
             {
                 if(password_verify($post['password'], $row['password']))
@@ -23,14 +22,15 @@ class UserModel extends Model {
                         'name' => $row['username']
                     );
 
+                    $this->LogMessage(LoggerCodes::Info, "User ".$_SESSION['user_data']['name']." logged in.");
                     header('Location: '.ROOT_URL."/movie");
                 }
                 else
                 {
-                    echo "Incorrect Login!";
+                    $this->LogMessage(LoggerCodes::Error, "User ".$post['username']." failed to login.");
                 }
             }  else {
-                echo "Incorrect Login!";
+                $this->LogMessage(LoggerCodes::Error, "User ".$post['username']." failed to login.");
             }
 
         }
@@ -48,7 +48,7 @@ class UserModel extends Model {
             $this->bind(':username', $post['username']);
             $this->bind(':email', $post['email']);
             $this->bind(':password', password_hash($post['password'], PASSWORD_BCRYPT));
-            $this->execute();
+            $this->Execute();
 
             echo $post['username'];
             echo $post['email'];
@@ -56,9 +56,19 @@ class UserModel extends Model {
 
             if($this->lastInsertID())
             {
+                $this->LogMessage(LoggerCodes::Info, "User ".$post['username']." registered account.");
                 header('Location: '.ROOT_URL."/");
             }
         }
+    }
+
+    public function logout()
+    {
+        $this->LogMessage(LoggerCodes::Info, "User ".$_SESSION['user_data']['name']." logged out.");
+        unset($_SESSION['is_logged_in']);
+        unset($_SESSION['user_data']);
+        session_destroy();
+        header('Location: '.ROOT_URL);
     }
 
 }
