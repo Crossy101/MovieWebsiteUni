@@ -1,13 +1,11 @@
 <?php
-abstract class Model {
+abstract class Model extends Logger{
     protected $dbh;
     protected $statement;
 
     public function __construct()
     {
             $this->dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
-
-
     }
 
     public function CreateQuery($query)
@@ -47,8 +45,6 @@ abstract class Model {
         {
             echo "Failed!";
         }
-
-
     }
 
     public function ResultSet()
@@ -57,9 +53,23 @@ abstract class Model {
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function ResultSingle()
+    {
+        $this->execute();
+        return $this->statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     public function lastInsertID()
     {
         return $this->dbh->lastInsertId();
     }
+
+
+    public function LogMessage($logType, $message)
+    {
+        $this->Log($logType, $message);
+    }
+
 
 }
