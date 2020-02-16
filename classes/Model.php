@@ -57,9 +57,15 @@ abstract class Model {
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function ResultSingle()
+    {
+        $this->execute();
+        return $this->statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     public function lastInsertID()
     {
         return $this->dbh->lastInsertId();
     }
-
 }

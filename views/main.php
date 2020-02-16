@@ -20,12 +20,21 @@
         </div>
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
+                <?php if(isset($_SESSION['is_logged_in'])) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php ROOT_URL?>">Welcome <?php echo $_SESSION['user_data']['name'] ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php ROOT_URL?>/user/logout">Logout</a>
+                    </li>
+                <?php else : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php ROOT_URL?>/user/login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php ROOT_URL?>/user/register">Register</a>
                 </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>
