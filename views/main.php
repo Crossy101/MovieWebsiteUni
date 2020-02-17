@@ -14,7 +14,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                    <li>
+                        <?php if(isset($_SESSION['is_logged_in'])) : ?>
+                        <a class="nav-item nav-link active" href="<?php echo ROOT_URL; ?>/movie">Home <span class="sr-only">(current)</span></a>
+                        <?php else : ?>
+                        <a class="nav-item nav-link active" href="<?php echo ROOT_URL; ?>">Home <span class="sr-only">(current)</span></a>
+                        <?php endif; ?>
+                    </li>
+
+                    <?php if(isset($_SESSION['user_data']['admin'])) : ?>
+                        <?php if($_SESSION['user_data']['admin'] == true) : ?>
+                            <li>
+                                <a class="nav-item nav-link active" href="<?php echo ROOT_URL; ?>/movie/addmovie">AddMovie<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li>
+                                <a class="nav-item nav-link active" href="<?php echo ROOT_URL; ?>/movie/addgenre">AddGenre<span class="sr-only">(current)</span></a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
@@ -45,7 +62,7 @@
                 ?>
         </div>
 
-        <footer class="container">
+        <footer class="container" style="text-align: center;">
             <p>&copy; MovieInfo 2020</p>
         </footer>
 

@@ -39,14 +39,7 @@ abstract class Model extends Logger {
 
     public function Execute()
     {
-        if($this->statement->execute())
-        {
-            echo "Success!";
-        }
-        else
-        {
-            echo "Failed!";
-        }
+        $this->statement->execute();
     }
 
     public function ResultSet()
