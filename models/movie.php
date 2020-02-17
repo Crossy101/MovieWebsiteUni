@@ -2,6 +2,9 @@
 class MovieModel extends Model {
     public function Index($search_name = "", $search_genre = 0)
     {
+        if(!isset($_SESSION['is_logged_in']))
+            header('Location: '.ROOT_URL);
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         if($post['submit'])
         {
@@ -52,6 +55,9 @@ class MovieModel extends Model {
 
     public function GetMovie($id)
     {
+        if(!isset($_SESSION['is_logged_in']))
+            header('Location: '.ROOT_URL);
+
         $this->CreateQuery("SELECT * FROM movies WHERE id = :movie_id");
         $this->bind(':movie_id', $id);
         $this->Execute();
@@ -69,6 +75,9 @@ class MovieModel extends Model {
 
     public function AddMovie()
     {
+        if(!isset($_SESSION['is_logged_in']))
+            header('Location: '.ROOT_URL);
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         // Check if image file is a actual image or fake image
@@ -136,6 +145,9 @@ class MovieModel extends Model {
 
     public function AddGenre()
     {
+        if(!isset($_SESSION['is_logged_in']))
+            header('Location: '.ROOT_URL);
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         if($post['submit'])
