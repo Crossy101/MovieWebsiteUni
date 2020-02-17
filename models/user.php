@@ -19,7 +19,8 @@ class UserModel extends Model {
                     $_SESSION['is_logged_in'] = true;
                     $_SESSION['user_data'] = array(
                         "id" => $row['id'],
-                        'name' => $row['username']
+                        'name' => $row['username'],
+                        'admin' => $row['admin']
                     );
 
                     $this->LogMessage(LoggerCodes::Info, "User ".$_SESSION['user_data']['name']." logged in.");
@@ -32,7 +33,6 @@ class UserModel extends Model {
             }  else {
                 $this->LogMessage(LoggerCodes::Error, "User ".$post['username']." failed to login.");
             }
-
         }
     }
 
@@ -49,10 +49,6 @@ class UserModel extends Model {
             $this->bind(':email', $post['email']);
             $this->bind(':password', password_hash($post['password'], PASSWORD_BCRYPT));
             $this->Execute();
-
-            echo $post['username'];
-            echo $post['email'];
-            echo $post['password'];
 
             if($this->lastInsertID())
             {
