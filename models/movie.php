@@ -78,6 +78,9 @@ class MovieModel extends Model {
         if(!isset($_SESSION['is_logged_in']))
             header('Location: '.ROOT_URL);
 
+        if($_SESSION['user_data']['admin'] == false)
+            header('Location: '.ROOT_URL);
+
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         // Check if image file is a actual image or fake image
@@ -142,6 +145,63 @@ class MovieModel extends Model {
         $allGenres = $this->ResultSet();
         return $allGenres;
     }
+
+    public function EditMovie($id)
+    {
+        if(!isset($_SESSION['is_logged_in']))
+            header('Location: '.ROOT_URL);
+
+        if($_SESSION['user_data']['admin'] == false)
+            header('Location: '.ROOT_URL);
+
+        if(isset($_POST))
+        {
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            if($post['submit'])
+            {
+                $movieID = $post['movieID'];
+                $movieName = $post['movieName'];
+                $movieDescription = $post['movieDescription'];
+                $movieGenre = $post['movieGenre'];
+
+                $this->CreateQuery('SELECT * FROM genres WHERE genre_name = :post_genre');
+                $this->bind(':post_genre', $movieGenre);
+                $this->Execute();
+                $movieGenreID = $this->ResultSingle();
+
+                $this->CreateQuery('SELECT * FROM movies WHERE id = :movie_id');
+                $this->bind(':movie_id', $id);
+                $this->Execute();
+                $foundMovie = $this->ResultSingle();
+
+                if(!is_null($foundMovie))
+                {
+                    $this->CreateQuery('UPDATE movies SET movie_name = :movie_name, movie_description = :movie_description, genre_id = :genre_id WHERE id = :movie_id;');
+                    $this->bind(":movie_id", $movieID);
+                    $this->bind(":movie_name", $movieName);
+                    $this->bind(":movie_description", $movieDescription);
+                    $this->bind(":genre_id", $movieGenreID['id']);
+                    $this->Execute();
+                }
+                header('Location: '.ROOT_URL."/movie");
+            }
+        }
+
+        $this->CreateQuery("SELECT * FROM movies WHERE id = :movie_id");
+        $this->bind(':movie_id', $id);
+        $this->Execute();
+        $movie =  $this->ResultSingle();
+
+        $this->CreateQuery("SELECT * FROM genres");
+        $this->bind(':movie_genre', $movie['genre_id']);
+        $this->Execute();
+        $allMovieGenres =  $this->ResultSet();
+
+        $movie['movieGenres'] = $allMovieGenres;
+
+        return $movie;
+    }
+
 
     public function AddGenre()
     {

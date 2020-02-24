@@ -28,4 +28,11 @@ class movie extends Controller{
         $this->ReturnView($viewModel->AddGenre(), true);
     }
 
+    protected function EditMovie()
+    {
+        $id = $_GET['id'];
+        $viewModel = new MovieModel();
+        $this->ReturnView($viewModel->EditMovie($id), true);
+    }
+
 }
