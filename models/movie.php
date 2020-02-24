@@ -1,5 +1,6 @@
 <?php
 class MovieModel extends Model {
+    //This function is for when the user searches for a movie or gets the default Index Movie Page
     public function Index($search_name = "", $search_genre = 0)
     {
         if(!isset($_SESSION['is_logged_in']))
@@ -53,6 +54,7 @@ class MovieModel extends Model {
         }
     }
 
+    //This function is for when the gets a specific movie from the index movie page
     public function GetMovie($id)
     {
         if(!isset($_SESSION['is_logged_in']))
@@ -73,6 +75,7 @@ class MovieModel extends Model {
         return $movie;
     }
 
+    //This function is for when the Admin wants to add a movie
     public function AddMovie()
     {
         if(!isset($_SESSION['is_logged_in']))
@@ -146,6 +149,7 @@ class MovieModel extends Model {
         return $allGenres;
     }
 
+    //This function is for when the Admin wants to edit the movie details
     public function EditMovie($id)
     {
         if(!isset($_SESSION['is_logged_in']))
@@ -182,6 +186,7 @@ class MovieModel extends Model {
                     $this->bind(":movie_description", $movieDescription);
                     $this->bind(":genre_id", $movieGenreID['id']);
                     $this->Execute();
+                    $this->LogMessage(LoggerCodes::Info, "User ".$_SESSION['user_data']['name']." edited the movie: ".$post['movieName']);
                 }
                 header('Location: '.ROOT_URL."/movie");
             }
@@ -202,7 +207,7 @@ class MovieModel extends Model {
         return $movie;
     }
 
-
+    //This function is for when the Admin wants to add a new Movie Genre
     public function AddGenre()
     {
         if(!isset($_SESSION['is_logged_in']))
