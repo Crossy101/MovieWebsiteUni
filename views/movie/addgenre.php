@@ -6,7 +6,7 @@
                 <form method="post">
                     <div class="form-group">
                         <label for="movieGenre">Movie Genre Name</label>
-                        <input type="text" class="form-control" name="movieGenre" id="movieGenre" placeholder="Genre">
+                        <input type="text" class="form-control" name="movieGenre" id="movieGenre" placeholder="Genre" required>
                     </div>
                     <button type="submit" name="submit" value="Submit" class="btn btn-primary">Submit</button>
                 </form>

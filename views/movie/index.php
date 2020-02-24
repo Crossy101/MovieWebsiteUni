@@ -27,11 +27,18 @@
         <?php foreach ($viewModel['allMovies'] as $item) : ?>
         <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
             <div class="card mb-3" style="min-height: 550px;">
-                <img class="card-img-top" src="<?php ROOT_URL ?>/assets/movieImages/<?php echo $item['image_name'] ?>" alt="Card image cap">
+                <?php if(isset($item['image_name']) && $item['image_name'] != "") : ?>
+                    <img class="card-img-top" src="<?php ROOT_URL ?>/assets/movieImages/<?php echo $item['image_name'] ?>" alt="Card image cap">
+                <?php else : ?>
+                    <img class="card-img-top" src="<?php ROOT_URL ?>/assets/movieImages/default.png" alt="Card image cap">
+                <?php endif; ?>
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $item['movie_name'] ?></h5>
                     <p class="card-text"><?php echo $item['movie_description']?></p>
                     <button class="btn"><a href="<?php ROOT_URL ?>/movie/getmovie/<?php echo $item['id'] ?>">View</a></button>
+                    <?php if($_SESSION['user_data']['admin'] == true) : ?>
+                        <button class="btn"><a href="<?php ROOT_URL ?>/movie/editmovie/<?php echo $item['id'] ?>">Edit</a></button>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
