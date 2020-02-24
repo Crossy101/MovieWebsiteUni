@@ -1,5 +1,6 @@
 <?php
 class UserModel extends Model {
+    //This function is for when the user tries to login to the website
     public function login()
     {
         //Sanitize Post
@@ -36,6 +37,7 @@ class UserModel extends Model {
         }
     }
 
+    //This function is for when the user registers on the website
     public function register()
     {
         //Sanitize Post
@@ -58,6 +60,7 @@ class UserModel extends Model {
         }
     }
 
+    //This function is for when the user logs out of the website
     public function logout()
     {
         $this->LogMessage(LoggerCodes::Info, "User ".$_SESSION['user_data']['name']." logged out.");

@@ -16,16 +16,13 @@
             </div>
             <div class="col-md-4">
                 <h2>Most Popular</h2>
-                <p>MovieInfo is the world's most popular and authoritative source for movie, TV and celebrity content. Find ratings and reviews for the newest movie and TV shows. </p>
+                <p>MovieInfo is the world's most popular and authoritative source for movie, TV and celebrity content. Find ratings and reviews for the newest movies. </p>
             </div>
             <div class="col-md-4">
                 <h2>Get the Latest Info</h2>
                 <p>MovieInfo provides comprehensive movie info including reviews, ratings and biographies. Get recommendations for new movies to watch, rent, stream, or own.</p>
             </div>
         </div>
-
         <hr>
-
     </div>
-
 </main>
